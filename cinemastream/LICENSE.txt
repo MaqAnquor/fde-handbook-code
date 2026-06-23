@@ -1,0 +1,32 @@
+CinemaStream Handbook - Companion Code - PROPRIETARY LICENSE
+Copyright (c) 2026 MaqAnquor. All Rights Reserved.
+
+This repository contains the companion portfolio code, datasets, and assets for
+"The FDE Handbook" (the "Book"). It is
+proprietary and provided to licensed purchasers of the Book.
+
+1. PERMITTED USE
+   A licensed purchaser may use, run, and adapt this code within their own
+   private or commercial projects, and may use it to follow along with the Book.
+
+2. RESTRICTIONS
+   Without prior written permission, you may NOT:
+     a. resell, sublicense, rent, or redistribute this code or the datasets as a
+        standalone product or as part of a competing course, tutorial, or book;
+     b. publish the Book's chapters or notebooks (this repo intentionally
+        contains only the runnable code, not the manuscript);
+     c. use the contents to train or fine-tune machine-learning / AI models;
+     d. remove or alter copyright, attribution, or license notices.
+
+3. NO WARRANTY
+   PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. THE AUTHOR IS NOT LIABLE FOR
+   ANY DAMAGES ARISING FROM USE OF THIS CODE.
+
+4. LICENSING ENQUIRIES
+   For team or redistribution licenses, contact: <your-email-or-website-here>
+
+------------------------------------------------------------------------------
+NOTE (delete before shipping): Template, not legal advice. If this repo is
+PUBLIC for Google Colab access, the code is viewable/cloneable by anyone; this
+license restricts resale but not viewing. Consider a private repo for stronger
+protection.

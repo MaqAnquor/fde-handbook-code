@@ -1,0 +1,66 @@
+# cinemastream/k8s/pipeline-deployment.yaml
+# Created: Ch 021a (Production Docker & Kubernetes)
+#
+# Deploys the CinemaStream data pipeline as a K8s Deployment + Service.
+# Apply with: kubectl apply -f k8s/pipeline-deployment.yaml
+# View pods:  kubectl get pods -n data-team
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cinemastream-pipeline
+  namespace: data-team
+  labels:
+    app: cinemastream-pipeline
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cinemastream-pipeline
+  template:
+    metadata:
+      labels:
+        app: cinemastream-pipeline
+    spec:
+      containers:
+        - name: pipeline
+          image: gcr.io/cinemastream/pipeline:v0.2.0   # pinned tag — never use :latest
+          env:
+            - name: DB_HOST
+              value: postgres-service       # K8s DNS — resolves to the postgres Service
+            - name: OPENEXCHANGE_APP_ID
+              valueFrom:
+                secretKeyRef:              # read from K8s Secret, never an ENV literal
+                  name: cinemastream-secrets
+                  key: openexchange-app-id
+          resources:
+            requests:
+              cpu: "250m"                  # 0.25 cores reserved by the scheduler
+              memory: "256Mi"
+            limits:
+              cpu: "500m"                  # hard cap — prevents starving other pods
+              memory: "512Mi"
+          readinessProbe:
+            exec:
+              command: ["python3", "-c", "import cinemastream"]
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command: ["python3", "-c", "import cinemastream"]
+            initialDelaySeconds: 30        # generous delay — let the container fully start
+            periodSeconds: 30
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cinemastream-pipeline-service
+  namespace: data-team
+spec:
+  selector:
+    app: cinemastream-pipeline
+  ports:
+    - port: 8000
+      targetPort: 8000
+  type: ClusterIP                          # internal only — no external access

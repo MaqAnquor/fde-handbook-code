@@ -1,0 +1,22 @@
+{
+  "2": {
+    "inputs": {
+      "text": "movie poster thumbnail, action film, dynamic composition, motion blur, high contrast, teal and orange color grading, professional cinematography, no text, no logos, ultra detailed, 8K"
+    }
+  },
+  "3": {
+    "inputs": {
+      "text": "text, watermark, logo, blurry, low quality, ugly, cartoon"
+    }
+  },
+  "5": {
+    "inputs": {
+      "seed": 1257641460
+    }
+  },
+  "7": {
+    "inputs": {
+      "filename_prefix": "thumbnail_00001"
+    }
+  }
+}

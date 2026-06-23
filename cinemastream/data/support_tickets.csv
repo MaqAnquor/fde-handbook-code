@@ -1,0 +1,151 @@
+ticket_id,user_id,created_at,category,priority,status,description
+1,23,2025-05-05 14:50:40,Billing,High,Resolved,"Charged twice this month, please check."
+2,65,2024-07-31 06:39:52,Other,Low,Resolved,General feedback about the app.
+3,70,2024-05-01 22:22:24,Other,High,Closed,General feedback about the app.
+4,67,2025-03-23 18:07:06,Content,Low,Open,When will regional-language titles be added?
+5,55,2024-10-26 05:56:01,Other,High,Resolved,General feedback about the app.
+6,45,2024-07-15 21:34:30,Content,Medium,InProgress,When will regional-language titles be added?
+7,11,2024-12-07 00:28:24,Playback,Medium,Resolved,Video keeps buffering on mobile.
+8,25,2024-05-05 05:57:28,Account,Medium,Closed,Cannot reset my password.
+9,67,2024-07-31 12:29:03,Other,Medium,InProgress,General feedback about the app.
+10,89,2025-01-01 08:50:05,Playback,Medium,Open,Video keeps buffering on mobile.
+11,84,2024-11-14 00:03:24,Content,Low,Resolved,When will regional-language titles be added?
+12,47,2024-12-01 00:49:14,Other,Critical,InProgress,General feedback about the app.
+13,53,2025-05-10 17:51:03,Playback,Low,Resolved,Video keeps buffering on mobile.
+14,33,2024-12-25 04:25:40,Content,Medium,Closed,When will regional-language titles be added?
+15,95,2024-08-16 05:47:01,Content,High,Resolved,When will regional-language titles be added?
+16,58,2024-09-03 16:04:46,Playback,Low,Resolved,Video keeps buffering on mobile.
+17,71,2024-06-10 10:20:04,Account,Low,Closed,Cannot reset my password.
+18,12,2024-08-21 21:07:06,Billing,Medium,Resolved,"Charged twice this month, please check."
+19,9,2024-11-21 08:23:25,Billing,Low,Open,"Charged twice this month, please check."
+20,93,2025-02-23 12:21:21,Billing,High,Resolved,"Charged twice this month, please check."
+21,37,2024-06-14 15:11:18,Other,High,Closed,General feedback about the app.
+22,57,2024-05-09 07:39:22,Content,Low,Resolved,When will regional-language titles be added?
+23,37,2024-09-29 06:20:16,Other,Low,Resolved,General feedback about the app.
+24,90,2024-10-27 22:39:35,Other,Medium,Resolved,General feedback about the app.
+25,31,2024-05-01 05:21:18,Account,Critical,Open,Cannot reset my password.
+26,100,2025-03-07 05:59:01,Account,Low,InProgress,Cannot reset my password.
+27,26,2025-06-07 03:25:24,Other,Low,Closed,General feedback about the app.
+28,71,2024-12-07 23:20:54,Billing,Medium,Resolved,"Charged twice this month, please check."
+29,45,2025-01-25 21:24:18,Other,Critical,InProgress,General feedback about the app.
+30,25,2025-04-19 05:19:20,Other,High,Resolved,General feedback about the app.
+31,23,2025-03-13 05:32:22,Account,Medium,Resolved,Cannot reset my password.
+32,38,2025-01-20 01:25:24,Other,High,Closed,General feedback about the app.
+33,69,2024-11-11 06:58:31,Account,Medium,Closed,Cannot reset my password.
+34,62,2024-11-05 22:56:31,Other,High,Closed,General feedback about the app.
+35,88,2025-04-23 20:27:05,Content,High,Closed,When will regional-language titles be added?
+36,15,2024-11-17 06:06:31,Content,Low,Resolved,When will regional-language titles be added?
+37,87,2024-10-26 14:12:30,Playback,High,Resolved,Video keeps buffering on mobile.
+38,67,2025-06-21 01:16:31,Account,Low,Closed,Cannot reset my password.
+39,37,2024-07-12 05:49:17,Playback,Low,Closed,Video keeps buffering on mobile.
+40,10,2024-09-16 15:12:55,Account,Medium,InProgress,Cannot reset my password.
+41,35,2024-09-19 23:20:56,Other,High,Resolved,General feedback about the app.
+42,64,2024-10-03 02:03:14,Playback,Low,InProgress,Video keeps buffering on mobile.
+43,27,2024-10-26 00:44:17,Account,Low,InProgress,Cannot reset my password.
+44,46,2024-08-30 03:58:05,Other,High,Open,General feedback about the app.
+45,87,2025-05-18 15:56:19,Billing,Medium,Closed,"Charged twice this month, please check."
+46,6,2025-05-10 14:34:33,Other,Low,InProgress,General feedback about the app.
+47,36,2025-05-17 05:16:29,Other,Low,Closed,General feedback about the app.
+48,36,2025-03-06 01:00:41,Other,Low,Resolved,General feedback about the app.
+49,68,2025-03-25 16:34:11,Billing,Medium,Resolved,"Charged twice this month, please check."
+50,45,2025-03-02 19:24:55,Other,High,Closed,General feedback about the app.
+51,16,2025-06-07 12:02:38,Content,Medium,Resolved,When will regional-language titles be added?
+52,87,2024-10-11 16:42:33,Billing,Low,Open,"Charged twice this month, please check."
+53,79,2024-11-18 17:10:23,Account,Low,InProgress,Cannot reset my password.
+54,61,2025-01-22 11:46:53,Account,Low,Resolved,Cannot reset my password.
+55,54,2025-02-14 04:21:16,Playback,Low,Resolved,Video keeps buffering on mobile.
+56,24,2024-08-10 20:36:40,Content,Critical,Resolved,When will regional-language titles be added?
+57,93,2024-11-26 16:12:57,Billing,High,Resolved,"Charged twice this month, please check."
+58,26,2024-08-22 06:43:27,Content,High,Closed,When will regional-language titles be added?
+59,2,2024-09-15 04:11:53,Content,Medium,Open,When will regional-language titles be added?
+60,69,2025-01-01 05:34:56,Other,High,InProgress,General feedback about the app.
+61,73,2024-06-07 01:21:57,Other,Low,Resolved,General feedback about the app.
+62,28,2024-11-14 12:18:11,Billing,Medium,Resolved,"Charged twice this month, please check."
+63,96,2025-01-15 22:27:00,Content,Low,InProgress,When will regional-language titles be added?
+64,33,2025-01-23 07:14:23,Other,Low,Open,General feedback about the app.
+65,26,2025-06-23 05:12:59,Other,Low,Closed,General feedback about the app.
+66,42,2025-06-01 11:22:32,Account,Medium,Closed,Cannot reset my password.
+67,49,2024-12-09 13:11:11,Billing,Medium,Closed,"Charged twice this month, please check."
+68,82,2025-01-18 01:22:26,Playback,Medium,Resolved,Video keeps buffering on mobile.
+69,10,2024-07-01 10:45:11,Content,Low,InProgress,When will regional-language titles be added?
+70,84,2024-12-13 07:16:33,Account,Medium,Resolved,Cannot reset my password.
+71,35,2025-04-11 13:30:25,Content,High,Closed,When will regional-language titles be added?
+72,67,2025-04-15 17:59:20,Other,Medium,Open,General feedback about the app.
+73,17,2024-10-30 05:46:04,Billing,Medium,Closed,"Charged twice this month, please check."
+74,27,2024-09-07 15:26:11,Billing,Low,Open,"Charged twice this month, please check."
+75,71,2024-06-11 19:22:44,Content,Low,InProgress,When will regional-language titles be added?
+76,14,2024-11-20 20:27:53,Billing,Medium,Open,"Charged twice this month, please check."
+77,40,2024-10-26 03:30:17,Content,Low,InProgress,When will regional-language titles be added?
+78,17,2025-06-14 03:11:19,Playback,High,Open,Video keeps buffering on mobile.
+79,42,2025-05-05 20:10:03,Account,Medium,Closed,Cannot reset my password.
+80,71,2025-04-11 12:30:38,Account,Low,Closed,Cannot reset my password.
+81,23,2025-04-20 14:35:10,Other,Medium,Resolved,General feedback about the app.
+82,56,2025-06-11 13:59:52,Other,Medium,Resolved,General feedback about the app.
+83,62,2025-06-24 04:08:34,Account,Low,Open,Cannot reset my password.
+84,47,2025-03-17 04:02:09,Account,Low,InProgress,Cannot reset my password.
+85,67,2024-08-14 20:49:28,Billing,Low,Resolved,"Charged twice this month, please check."
+86,89,2025-05-18 02:16:14,Billing,High,Resolved,"Charged twice this month, please check."
+87,99,2025-03-31 07:53:44,Billing,High,Resolved,"Charged twice this month, please check."
+88,71,2025-02-15 05:13:36,Billing,Low,Closed,"Charged twice this month, please check."
+89,51,2024-11-11 02:24:04,Content,Low,Closed,When will regional-language titles be added?
+90,49,2024-10-19 08:08:27,Content,Low,Resolved,When will regional-language titles be added?
+91,67,2024-11-28 03:55:59,Playback,Low,Closed,Video keeps buffering on mobile.
+92,53,2024-09-24 00:35:08,Account,High,Open,Cannot reset my password.
+93,15,2025-04-19 16:12:32,Account,Medium,InProgress,Cannot reset my password.
+94,63,2024-09-23 20:38:56,Other,Low,Open,General feedback about the app.
+95,3,2024-09-22 10:07:40,Other,Critical,InProgress,General feedback about the app.
+96,92,2025-04-06 12:40:42,Playback,Medium,InProgress,Video keeps buffering on mobile.
+97,2,2025-05-19 08:59:23,Playback,Low,Resolved,Video keeps buffering on mobile.
+98,48,2025-04-26 03:42:17,Content,Medium,Open,When will regional-language titles be added?
+99,97,2024-08-22 11:16:28,Billing,Low,Closed,"Charged twice this month, please check."
+100,70,2025-05-01 04:10:16,Billing,Low,Closed,"Charged twice this month, please check."
+101,49,2024-05-10 19:10:11,Account,Low,Closed,Cannot reset my password.
+102,50,2025-04-10 01:23:25,Playback,Low,Closed,Video keeps buffering on mobile.
+103,59,2024-07-12 23:32:49,Playback,Medium,Closed,Video keeps buffering on mobile.
+104,50,2024-12-29 10:08:24,Content,High,Open,When will regional-language titles be added?
+105,96,2025-06-09 14:46:09,Billing,Low,Resolved,"Charged twice this month, please check."
+106,26,2025-02-04 22:50:23,Account,High,Closed,Cannot reset my password.
+107,15,2024-10-31 06:43:19,Playback,Medium,InProgress,Video keeps buffering on mobile.
+108,36,2024-08-01 22:25:48,Playback,Low,InProgress,Video keeps buffering on mobile.
+109,75,2025-05-05 03:41:15,Billing,Medium,Open,"Charged twice this month, please check."
+110,32,2024-08-31 11:42:44,Billing,Medium,Resolved,"Charged twice this month, please check."
+111,98,2024-06-16 15:27:24,Account,Low,Resolved,Cannot reset my password.
+112,14,2024-08-06 17:35:37,Other,Medium,InProgress,General feedback about the app.
+113,83,2025-01-25 18:28:18,Other,High,Resolved,General feedback about the app.
+114,3,2025-02-18 10:07:24,Playback,Low,Open,Video keeps buffering on mobile.
+115,63,2025-04-05 19:35:28,Billing,Medium,Resolved,"Charged twice this month, please check."
+116,25,2024-09-22 22:58:27,Content,Medium,InProgress,When will regional-language titles be added?
+117,36,2024-09-02 13:01:04,Content,Low,Open,When will regional-language titles be added?
+118,34,2025-06-25 16:16:00,Account,Low,Open,Cannot reset my password.
+119,49,2024-09-22 02:36:35,Other,High,Resolved,General feedback about the app.
+120,100,2024-11-02 11:18:14,Account,Low,Open,Cannot reset my password.
+121,50,2024-09-25 11:25:23,Other,Medium,Resolved,General feedback about the app.
+122,20,2024-12-06 21:54:31,Other,Low,Resolved,General feedback about the app.
+123,13,2025-06-11 09:09:53,Billing,Medium,Open,"Charged twice this month, please check."
+124,23,2024-05-25 06:59:06,Playback,Low,Resolved,Video keeps buffering on mobile.
+125,5,2025-02-26 20:00:25,Billing,Medium,Resolved,"Charged twice this month, please check."
+126,33,2024-06-08 03:01:20,Other,Low,Resolved,General feedback about the app.
+127,2,2024-10-10 03:09:36,Billing,Medium,Closed,"Charged twice this month, please check."
+128,60,2024-06-17 03:32:00,Billing,Low,Closed,"Charged twice this month, please check."
+129,48,2024-06-15 06:47:28,Content,High,InProgress,When will regional-language titles be added?
+130,94,2024-06-24 16:07:47,Billing,High,Open,"Charged twice this month, please check."
+131,67,2024-07-15 10:26:02,Playback,Low,InProgress,Video keeps buffering on mobile.
+132,25,2024-09-28 00:00:26,Content,Medium,InProgress,When will regional-language titles be added?
+133,72,2025-03-19 11:36:06,Playback,Medium,Closed,Video keeps buffering on mobile.
+134,46,2025-04-22 07:10:17,Other,Medium,Resolved,General feedback about the app.
+135,22,2024-09-18 02:50:06,Billing,Medium,Resolved,"Charged twice this month, please check."
+136,69,2025-04-10 02:20:43,Playback,High,Closed,Video keeps buffering on mobile.
+137,42,2025-02-13 17:21:14,Other,Medium,Resolved,General feedback about the app.
+138,78,2024-11-03 23:23:37,Account,Medium,InProgress,Cannot reset my password.
+139,96,2024-11-14 08:33:52,Other,Low,Resolved,General feedback about the app.
+140,1,2024-05-27 22:09:47,Content,Critical,Resolved,When will regional-language titles be added?
+141,18,2024-12-21 10:44:10,Other,Low,Closed,General feedback about the app.
+142,41,2024-05-17 20:32:34,Playback,High,Closed,Video keeps buffering on mobile.
+143,71,2025-06-02 02:47:28,Account,Medium,Closed,Cannot reset my password.
+144,13,2024-05-30 07:27:20,Playback,Medium,Open,Video keeps buffering on mobile.
+145,47,2024-11-11 01:40:13,Account,Low,Closed,Cannot reset my password.
+146,74,2025-03-07 12:46:46,Billing,Medium,InProgress,"Charged twice this month, please check."
+147,93,2025-01-08 04:41:54,Billing,High,Open,"Charged twice this month, please check."
+148,13,2024-12-20 07:44:10,Other,Low,Closed,General feedback about the app.
+149,11,2024-06-13 10:28:29,Content,High,InProgress,When will regional-language titles be added?
+150,54,2024-08-02 15:02:17,Content,High,InProgress,When will regional-language titles be added?

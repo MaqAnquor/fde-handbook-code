@@ -1,0 +1,72 @@
+# cinemastream/docker-compose.yml — local development stack
+# Created: Ch 021a (Production Docker & Kubernetes)
+#
+# Usage:
+#   docker-compose up -d                       (pipeline + postgres)
+#   docker-compose --profile tools up -d       (+ pgAdmin GUI)
+#   docker-compose down                        (stop, keep volumes)
+#   docker-compose down -v                     (stop + remove volumes)
+version: "3.9"
+
+services:
+
+  # ── CinemaStream data pipeline ───────────────────────────────────────────────
+  pipeline:
+    build:
+      context: .
+      target: runtime              # build only the runtime stage from the multi-stage Dockerfile
+    env_file:
+      - .env.local                 # local secrets — .gitignored, never committed
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=cinemastream_dev
+      - ENVIRONMENT=development
+    volumes:
+      - ./data:/app/data           # bind mount — file changes visible without rebuilding
+      - ./scripts:/app/scripts     # live-reload scripts during development
+    depends_on:
+      postgres:
+        condition: service_healthy # waits for the postgres health check, not just container start
+    networks:
+      - cinemastream-net
+
+  # ── PostgreSQL ───────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: cinemastream_dev
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: localonly
+    ports:
+      - "5432:5432"                # expose to host for pgcli / DBeaver
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # named volume — survives container restarts
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devuser -d cinemastream_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cinemastream-net
+
+  # ── pgAdmin (optional GUI — only starts with: --profile tools) ───────────────
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dev@cinemastream.example.com
+      PGADMIN_DEFAULT_PASSWORD: localonly
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    profiles:
+      - tools
+    networks:
+      - cinemastream-net
+
+volumes:
+  postgres_data:
+
+networks:
+  cinemastream-net:
+    driver: bridge

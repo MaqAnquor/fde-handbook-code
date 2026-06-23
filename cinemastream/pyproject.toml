@@ -1,0 +1,70 @@
+[project]
+name = "cinemastream"
+version = "0.1.0"
+description = "CinemaStream data platform — analytics, pipelines, ML, and dashboards"
+authors = [
+    {name = "CinemaStream Data Team", email = "data@cinemastream.example.com"}
+]
+requires-python = ">=3.11,<3.14"  # 3.14 lacks wheels for the pinned compiled deps (torch, faiss, duckdb, …)
+
+dependencies = [
+    "pandas>=2.2.0",
+    "numpy>=1.26.0",
+    "requests>=2.31.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+pipeline = [
+    "apache-airflow>=2.8.0",
+    "great-expectations>=0.18.0",
+]
+viz = [
+    "matplotlib>=3.8.0",
+    "seaborn>=0.13.0",
+    "streamlit>=1.30.0",
+    "plotly>=5.18.0",
+]
+ml = [
+    "scikit-learn>=1.4.0",
+    "xgboost>=2.0.0",
+    "lightgbm>=4.0.0",
+    "optuna>=3.5.0",
+    "mlflow>=2.10.0",
+]
+dl = [
+    "torch>=2.2.0",
+    "transformers>=4.38.0,<5",  # 5.x removed the pipeline("summarization") task the book teaches
+    "sentence-transformers>=2.6.0",
+]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "responses>=0.25.0",
+    "black>=24.0.0",
+    "ruff>=0.3.0",
+    "mypy>=1.8.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true

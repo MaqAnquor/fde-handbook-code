@@ -1,0 +1,73 @@
+# cinemastream/.gitignore
+# Generated: Chapter 17 — Git
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ---- Virtual environment ----
+.venv/
+venv/
+env/
+ENV/
+
+# ---- Secrets & credentials ----
+.env
+.env.*
+secrets.json
+credentials.json
+*.key
+*.pem
+service_account.json
+
+# ---- Data files ----
+# The canonical catalog CSVs ARE committed (frozen fixtures the chapters read, so
+# the book is reproducible at any chapter/part). They are produced by the single
+# generator scripts/generate_data.py; a contract test keeps them in sync.
+# Local overrides and derived formats stay ignored.
+data/*.local.csv
+data/working/          # exercise scratch outputs — write here to avoid dirtying canonical data/
+data/*.json
+data/*.parquet
+data/*.xlsx
+!data/.gitkeep
+
+# ---- OS generated ----
+.DS_Store
+.DS_Store?
+Thumbs.db
+
+# ---- IDEs ----
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ---- Logs & temporary files ----
+*.log
+tmp/
+temp/
+.cache/
+
+# ---- dbt ----
+dbt_cinemastream/target/
+dbt_cinemastream/dbt_packages/
+dbt_cinemastream/logs/
+
+# ---- MLflow ----
+ml/mlruns/
+ml/**/mlruns/
+ml/mlflow.db
+
+# ---- Serialized models (regenerated from code) ----
+ml/**/artifacts/
+*.pkl
+*.joblib
+*.onnx

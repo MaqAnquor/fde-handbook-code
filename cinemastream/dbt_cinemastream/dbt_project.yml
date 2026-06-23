@@ -1,0 +1,28 @@
+# cinemastream/dbt_cinemastream/dbt_project.yml
+# Created Chapter 54 (Data Contracts) as part of the dbt_cinemastream skeleton.
+# Model SQL itself was designed conceptually in Chapter 49 — this file makes
+# the project structure real in the portfolio repo.
+
+name: cinemastream
+version: "1.0.0"
+config-version: 2
+
+profile: cinemastream    # refers to profiles.yml (not committed — contains credentials)
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  cinemastream:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: ephemeral
+    marts:
+      +materialized: table

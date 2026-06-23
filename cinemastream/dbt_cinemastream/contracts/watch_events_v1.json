@@ -1,0 +1,17 @@
+{
+  "dataset": "watch_events",
+  "version": 1,
+  "status": "deprecated",
+  "deprecation_date": "2026-06-24",
+  "description": "Original watch_events contract. 'completed' is a boolean. Superseded by v2, which adds 'completed_status' and 'subtitle_lang'. Both versions are valid until the deprecation date (Chapter 54).",
+  "fields": {
+    "event_id":      {"type": "int",   "nullable": false, "unique": true},
+    "user_id":       {"type": "int",   "nullable": false},
+    "movie_id":      {"type": "int",   "nullable": false},
+    "watch_started": {"type": "str",   "nullable": false, "description": "UTC timestamp, ISO 8601"},
+    "watch_minutes": {"type": "int",   "nullable": false, "min": 1},
+    "completed":     {"type": "bool",  "nullable": false, "allowed_values": [true, false], "description": "DEPRECATED — use completed_status"},
+    "device":        {"type": "str",   "nullable": false, "allowed_values": ["Mobile", "TV", "Web", "Tablet"]},
+    "country":       {"type": "str",   "nullable": false, "allowed_values": ["SG", "MY", "ID", "PH", "TH", "VN", "IN"]}
+  }
+}

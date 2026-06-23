@@ -1,0 +1,21 @@
+{
+  "pipeline": {
+    "name": "orders-ingestion",
+    "version": "1.0"
+  },
+  "paths": {
+    "input":    "cinemastream/data/raw_orders.csv",
+    "output":   "cinemastream/data/clean_orders.csv",
+    "rejected": "cinemastream/data/rejected_orders.json"
+  },
+  "validation": {
+    "min_amount":         0.01,
+    "max_amount":         9999.99,
+    "allowed_currencies": ["SGD", "MYR", "USD", "IDR", "PHP", "THB"],
+    "required_fields":    ["order_id", "user_id", "amount", "currency"]
+  },
+  "logging": {
+    "level": "INFO",
+    "file":  "cinemastream/logs/pipeline.log"
+  }
+}

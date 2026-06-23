@@ -1,0 +1,20 @@
+{
+  "dataset": "watch_events",
+  "version": 2,
+  "status": "active",
+  "effective_date": "2026-06-10",
+  "migration_deadline": "2026-06-24",
+  "description": "Adds completed_status (replaces boolean completed) and subtitle_lang. Producer: backend team (Carlos Reyes). Consumer: analytics warehouse (dbt marts). Both 'completed' (deprecated) and 'completed_status' (new) are populated until the migration deadline (Chapter 54).",
+  "fields": {
+    "event_id":         {"type": "int",   "nullable": false, "unique": true},
+    "user_id":          {"type": "int",   "nullable": false},
+    "movie_id":         {"type": "int",   "nullable": false},
+    "watch_started":    {"type": "str",   "nullable": false, "description": "UTC timestamp, ISO 8601"},
+    "watch_minutes":    {"type": "int",   "nullable": false, "min": 1},
+    "completed":        {"type": "bool",  "nullable": false, "allowed_values": [true, false], "description": "DEPRECATED — remove after migration_deadline, use completed_status"},
+    "completed_status": {"type": "str",   "nullable": false, "allowed_values": ["not_started", "in_progress", "completed"], "description": "NEW — replaces 'completed'"},
+    "device":           {"type": "str",   "nullable": false, "allowed_values": ["Mobile", "TV", "Web", "Tablet"]},
+    "country":          {"type": "str",   "nullable": false, "allowed_values": ["SG", "MY", "ID", "PH", "TH", "VN", "IN"]},
+    "subtitle_lang":    {"type": "str",   "nullable": true,  "allowed_values": ["en", "ms", "id", "tl", "th", "vi", "hi", "ta", null], "description": "NEW — ISO language code or null if no subtitles selected"}
+  }
+}
