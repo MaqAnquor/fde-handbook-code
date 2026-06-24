@@ -3,7 +3,7 @@
 # =============================================================================
 # Install everything:        pip install -r requirements.txt
 #                        OR  uv pip install -r requirements.txt   (recommended — faster, catches conflicts)
-# Supported Python: 3.11, 3.12, or 3.13 (tested on 3.13.7). NOT 3.14 — the
+# Supported Python: 3.11, 3.12, or 3.13 (tested on 3.13.9). NOT 3.14 — the
 # pinned compiled wheels (torch, faiss, duckdb, catboost, …) lag new Python
 # releases and would fall back to failing source builds. See SETUP.md Step 4.
 # Pinning makes runs reproducible on Windows, macOS, Linux, and Google Colab,
@@ -104,10 +104,10 @@ openpyxl==3.1.5
 nest-asyncio==1.6.0     # qc_notebooks.py: lets asyncio.run() work inside the notebook event loop (ch019b)
 
 # --- Testing helpers ---------------------------------------------------------
-pytest==8.4.0           # Ch 018a: testing chapter — must be installed to run test blocks in QC
+pytest==9.1.1           # Ch 018a: testing chapter — must be installed to run test blocks in QC
 mongomock==4.3.0        # Ch 041a: MongoDB mock for NoSQL chapter QC
-fakeredis==2.30.3       # Ch 041a: Redis mock for NoSQL chapter QC
-skl2onnx==1.17.0        # Ch 076: sklearn → ONNX export
+fakeredis==2.36.2       # Ch 041a: Redis mock for NoSQL chapter QC
+skl2onnx==1.20.0        # Ch 076: sklearn → ONNX export
 loguru==0.7.3           # Ch 013a: production logging chapter
-greenlet==3.2.3         # Ch 125: llama_index async dependency
+greenlet==3.5.2         # Ch 125: llama_index async dependency
 sdv==1.37.1             # Ch 024a: Synthetic Data Vault

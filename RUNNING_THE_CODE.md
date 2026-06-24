@@ -102,12 +102,23 @@ These examples were authored and verified against this exact stack. If you repro
 | | Value |
 |---|---|
 | Snapshot date | 2026-06-20 |
-| Python | 3.13.7 (also valid: 3.11, 3.12) |
+| Python | 3.13.9 (also valid: 3.11, 3.12) |
 | Resolver | pip legacy resolver (`--use-deprecated=legacy-resolver`) |
 | Dependency manifest | `requirements.txt` (single source of truth, all platforms) |
+| Exact lock | `requirements.lock` — all 385 packages hash-pinned (macOS arm64 / CPython 3.13.9) |
 | Notebooks | `notebooks/part_00…part_12` — generated from `chapters/` by `build_notebooks.py` |
 
 If a future package release breaks something, **the fix is to install this snapshot, not to upgrade.** The pins are the contract.
+
+For a **byte-identical** reproduction of the author's environment (Apple Silicon),
+install the hash-pinned lock instead of `requirements.txt`:
+
+```bash
+pip install --require-hashes -r requirements.lock
+```
+
+On Linux/Windows, install from `requirements.txt` (some locked wheels are
+platform-specific); the pins still guarantee output-matching versions.
 
 ---
 
@@ -118,6 +129,7 @@ After installing, confirm the stack is consistent:
 ```bash
 python tools/check_data_contract.py     # datasets match the schema
 python tools/check_notebooks_sync.py    # notebooks match the chapters
+python tools/check_env_drift.py         # installed packages match requirements.lock
 python tools/qc_notebooks.py --part 9   # execute a part's code end-to-end
 ```
 
