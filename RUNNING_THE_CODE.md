@@ -137,6 +137,33 @@ last digit of some floating-point results, may differ. (Outputs in the **deep-le
 RAG, and LLM** chapters depend on models, embeddings, or live services and are
 illustrative — they are not expected to reproduce byte-for-byte.)
 
+### Exact reproduction with Docker (optional, zero setup)
+
+If you'd rather not touch your own Python at all, run inside the book's **canonical
+image** — Linux/amd64, the exact pinned dependencies, and the determinism settings
+already baked in. Your **code and data come from this repo** (mounted); the
+**environment comes from the image**, so the gated chapters reproduce byte-for-byte.
+
+```bash
+# 1. clone this companion repo and cd into it (if you haven't already)
+git clone https://github.com/MaqAnquor/fde-handbook-code.git && cd fde-handbook-code
+
+# 2. pull the image
+docker pull ghcr.io/maqanquor/fde-handbook:latest
+
+# 3. launch JupyterLab on the repo, then open http://localhost:8888
+docker run --rm -p 8888:8888 -v "$PWD":/work ghcr.io/maqanquor/fde-handbook:latest
+```
+
+Open any notebook under `notebooks/` and run it — `PYTHONHASHSEED=0` and
+`OMP_NUM_THREADS=1` are already set inside the container, so set/dict ordering and
+numeric output match the book.
+
+**Scope:** this lean image covers **Parts 0–7 and the classic-ML chapters** (the
+deterministic, byte-reproducible core). The **deep-learning, RAG, and LLM** chapters
+need heavier dependencies (PyTorch/transformers) or live services and are illustrative —
+run those from `requirements.txt` on a machine with the right hardware.
+
 ---
 
 ## Verifying your environment
