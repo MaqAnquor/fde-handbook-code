@@ -120,6 +120,23 @@ pip install --require-hashes -r requirements.lock
 On Linux/Windows, install from `requirements.txt` (some locked wheels are
 platform-specific); the pins still guarantee output-matching versions.
 
+### Matching the book's output exactly (determinism)
+
+A few chapters print **sets/dictionaries** (whose order depends on Python's hash
+seed) or run multi-threaded math. To get output that matches the book character-for-
+character, set these two environment variables before running — they're how the book's
+outputs were captured:
+
+```bash
+export PYTHONHASHSEED=0      # fixes set/dict iteration order
+export OMP_NUM_THREADS=1     # deterministic reduction order for NumPy/XGBoost/LightGBM
+```
+
+Without them your code still runs correctly — only the *order* of a printed set, or the
+last digit of some floating-point results, may differ. (Outputs in the **deep-learning,
+RAG, and LLM** chapters depend on models, embeddings, or live services and are
+illustrative — they are not expected to reproduce byte-for-byte.)
+
 ---
 
 ## Verifying your environment
