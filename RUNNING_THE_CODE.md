@@ -29,10 +29,10 @@ That flag is not optional — see [Why the legacy resolver?](#why-the-legacy-res
 
 | Platform | How to set up |
 |---|---|
-| 🍎 **macOS** (Apple Silicon or Intel) | `python3.13 -m venv .venv` → activate → run the one command. GPU = Apple **MPS** (auto-detected by torch). |
-| 🪟 **Windows** (WSL2 — recommended) | Run inside Ubuntu/WSL exactly like Linux. GPU = **CUDA** if you have an NVIDIA card. |
-| 🪟 **Windows** (native) | `py -3.13 -m venv .venv` → activate → run the one command. |
-| ☁️ **Google Colab** (no install on your machine) | Upload a notebook, run the install cell, **Runtime → Restart**, run all. Free GPU for the deep-learning parts. |
+| **macOS** (Apple Silicon or Intel) | `python3.13 -m venv .venv` → activate → run the one command. GPU = Apple **MPS** (auto-detected by torch). |
+| **Windows** (WSL2 — recommended) | Run inside Ubuntu/WSL exactly like Linux. GPU = **CUDA** if you have an NVIDIA card. |
+| **Windows** (native) | `py -3.13 -m venv .venv` → activate → run the one command. |
+| **Google Colab** (no install on your machine) | Upload a notebook, run the install cell, **Runtime → Restart**, run all. Free GPU for the deep-learning parts. |
 
 If you just want to *read and run without installing anything*, **Colab is the fastest path** — upload a notebook and run the install cell.
 
@@ -48,7 +48,7 @@ Everything below is handled automatically by pip choosing the right wheel — yo
 | Isolation | `.venv` virtualenv | `.venv` virtualenv | The Colab runtime *is* the sandbox |
 | GPU backend (torch) | Apple **MPS** | **CUDA** (NVIDIA) or CPU | **CUDA** (free T4) |
 | `torch` install | CPU/MPS wheel, auto | CUDA or CPU wheel, auto | Already present; reinstall is expected |
-| `vllm` (Ch 128) | ❌ not supported (Linux+CUDA only) | ✅ in WSL+CUDA | ✅ on a GPU runtime |
+| `vllm` (Ch 128) | not supported (Linux+CUDA only) | supported in WSL+CUDA | supported on a GPU runtime |
 | After install | activate venv, launch Jupyter | activate venv, launch Jupyter | **must restart the runtime once** |
 
 Check your GPU backend from Python:
