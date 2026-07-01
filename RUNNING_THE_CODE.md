@@ -59,6 +59,58 @@ print("CUDA :", torch.cuda.is_available())          # Windows/Colab with NVIDIA
 print("MPS  :", torch.backends.mps.is_available())   # Apple Silicon
 ```
 
+### Newer NVIDIA GPUs (Ada / Blackwell) — the `cu128` wheel trap
+
+If you have a **recent NVIDIA card — especially a 50-series (Blackwell, compute capability
+`sm_120`)** — read this before you fight a confusing error. It is the single most common GPU
+setup failure, and it is easy to avoid once you know the rule.
+
+**The trap.** pip's *default* torch wheel does not include compiled kernels for the newest GPUs.
+On such a card `torch.cuda.is_available()` returns `True`, and then the first real GPU operation
+dies with:
+
+```
+CUDA error: no kernel image is available for execution on the device
+```
+
+`is_available()` is necessary but **not sufficient** — it only checks a driver exists, not that
+your torch build has kernels for your specific card.
+
+**The fix — install the CUDA build that matches your card.** First read your compute capability:
+
+```bash
+nvidia-smi --query-gpu=name,compute_cap --format=csv     # e.g. "RTX 5060 Ti, 12.0" → sm_120
+```
+
+Then install torch from the matching CUDA index. For any NVIDIA GPU from **Turing (RTX 20xx)
+through Blackwell (RTX 50xx)**, the `cu128` build (PyTorch ≥ 2.7) has the kernels:
+
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+```
+
+**Prove it works — run a real operation, not just `is_available()`:**
+
+```python
+import torch
+print("built for :", torch.cuda.get_arch_list())        # must contain your sm_XXX (e.g. 'sm_120')
+a = torch.randn(1024, 1024, device="cuda")
+print("real op   :", (a @ a).sum().item())               # if THIS runs, the GPU truly works
+```
+
+| Your GPU | Example cards | `sm_` | What to install |
+|---|---|---|---|
+| Turing / Ampere / Ada | RTX 20xx–40xx, A100 | 75–89 | `cu128` index (default wheel often works too) |
+| **Blackwell** | **RTX 50xx**, B200 | **120 / 100** | **`cu128` index — required** |
+| Pascal & older | GTX 10xx and down | ≤ 61 | Too old for recent torch → use **Colab** |
+| No NVIDIA GPU | Mac, most laptops | — | Colab (free T4) or CPU — see `COLAB_SETUP.md` |
+
+> **Note on the pinned `torch==2.12.1`.** That pin gives you correct, reproducible **CPU** output on
+> every platform. If you want to *use* an NVIDIA GPU, install the `cu128` build over the top as shown
+> above — it may resolve to a slightly different torch version (e.g. 2.11.x), and that is fine: the
+> deep-learning / RAG / LLM outputs are **representative, not byte-reproducible** (your numbers will
+> differ by card and driver — reproduce the *shape* of the result, not the last decimal).
+
 ---
 
 ## Why the dependencies are pinned (the honest version)
