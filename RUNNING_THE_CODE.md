@@ -211,6 +211,17 @@ Open any notebook under `notebooks/` and run it — `PYTHONHASHSEED=0` and
 `OMP_NUM_THREADS=1` are already set inside the container, so set/dict ordering and
 numeric output match the book.
 
+**Platform tested — macOS only, be aware if you're on Windows.** The image itself is
+built and published by GitHub Actions (a Linux runner), so it's identical no matter
+where you pull it from. But *running* it locally has only been verified on **macOS
+(Apple Silicon) with Docker Desktop**, where it works — Docker Desktop transparently
+runs the `linux/amd64` image on Apple Silicon. On the one Windows/NVIDIA machine used
+during this book's own development, Docker Desktop's WSL2 backend would not start at
+all, so Docker on Windows is an **untested path** for this book, not a confirmed one.
+If `docker run` fails on Windows, that's very likely a Docker Desktop/WSL2 setup issue
+on your machine rather than anything wrong with the image — the native `pip install`
+path above doesn't need Docker at all and is the more proven route on Windows.
+
 **Scope:** this lean image covers **Parts 0–7 and the classic-ML chapters** (the
 deterministic, byte-reproducible core). The **deep-learning, RAG, and LLM** chapters
 need heavier dependencies (PyTorch/transformers) or live services and are illustrative —
