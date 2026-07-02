@@ -143,6 +143,7 @@ This is already in the notebook; you don't add it yourself.
 ### Platform-specific exclusions
 
 - **`vllm` (Ch 128)** is not in `requirements.txt` — it requires Linux + CUDA. Install it separately on a GPU box: `pip install vllm`. On Mac it is skipped entirely.
+- **`timesfm` / `tabfm` (Ch 077c)** are not in `requirements.txt` — the foundation-model chapter runs in its **own fresh venv** (`python3.13 -m venv .venv-fm` → `pip install timesfm==2.0.1 tabfm==1.0.0 torch xgboost scikit-learn pandas`). Their dependency trees (newer numpy/pandas/huggingface-hub) conflict with the book's pinned stack; do not install them into the main `.venv`. The TabFM checkpoint download is ~12 GB.
 - **`faiss-cpu`** ships wheels for Windows, macOS (incl. Apple Silicon), and Linux — no source build needed.
 
 ---
