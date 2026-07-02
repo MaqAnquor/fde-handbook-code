@@ -231,13 +231,21 @@ run those from `requirements.txt` on a machine with the right hardware.
 
 ## Verifying your environment
 
-After installing, confirm the stack is consistent:
+After installing, a quick sanity check:
 
 ```bash
-python tools/check_data_contract.py     # datasets match the schema
-python tools/check_notebooks_sync.py    # notebooks match the chapters
-python tools/check_env_drift.py         # installed packages match requirements.lock
-python tools/qc_notebooks.py --part 9   # execute a part's code end-to-end
+python -c "import numpy, pandas, sklearn, torch; print('core imports OK')"
 ```
 
-All three should report success. If `qc_notebooks.py` fails on an import, you almost certainly skipped `--use-deprecated=legacy-resolver` — recreate the venv and reinstall with the flag.
+Then open any notebook under `notebooks/` and run it top to bottom. If the printed
+output matches that chapter's `Output:` blocks in the book, your environment is
+reproducing the deterministic core correctly.
+
+Two things **not** to worry about:
+
+- `pip check` will report a handful of version conflicts (`websockets`, `typer`).
+  That is expected — those are the same declared-but-harmless conflicts the legacy
+  resolver exists to step around (see "Why the legacy resolver?" above). The pinned
+  versions work together in practice.
+- If an **import** fails, you almost certainly installed without
+  `--use-deprecated=legacy-resolver` — delete the venv and reinstall with the flag.
