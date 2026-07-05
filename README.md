@@ -44,8 +44,9 @@ Datasets live in `cinemastream/data/*.csv`. Code imports as the
 ## The notebooks — one per part of the book
 
 The 13 notebooks contain every code block from the book, in reading order,
-ready to run top-to-bottom. (The teaching text lives in the book; the
-notebooks carry the code, section headings, and diagrams.)
+ready to run top-to-bottom. (The teaching text, diagrams, and illustrations
+live in the book; the notebooks carry the runnable code with section
+navigation.)
 
 | # | Book part | Chapters | Notebook |
 |---|---|---|---|
