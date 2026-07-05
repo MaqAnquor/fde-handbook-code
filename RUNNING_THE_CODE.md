@@ -201,22 +201,28 @@ already baked in. Your **code and data come from this repo** (mounted); the
 # 1. clone this companion repo and cd into it (if you haven't already)
 git clone https://github.com/MaqAnquor/fde-handbook-code.git && cd fde-handbook-code
 
-# 2. pull the image
-docker pull ghcr.io/maqanquor/fde-handbook:latest
+# 2. pull the image (the --platform flag is required on Apple Silicon Macs)
+docker pull --platform linux/amd64 ghcr.io/maqanquor/fde-handbook:latest
 
 # 3. launch JupyterLab on the repo, then open http://localhost:8888
-docker run --rm -p 8888:8888 -v "$PWD":/work ghcr.io/maqanquor/fde-handbook:latest
+docker run --rm --platform linux/amd64 -p 8888:8888 -v "$PWD":/work ghcr.io/maqanquor/fde-handbook:latest
 ```
 
 Open any notebook under `notebooks/` and run it — `PYTHONHASHSEED=0` and
 `OMP_NUM_THREADS=1` are already set inside the container, so set/dict ordering and
 numeric output match the book.
 
-**Platform tested — macOS only, be aware if you're on Windows.** The image itself is
-built and published by GitHub Actions (a Linux runner), so it's identical no matter
-where you pull it from. But *running* it locally has only been verified on **macOS
-(Apple Silicon) with Docker Desktop**, where it works — Docker Desktop transparently
-runs the `linux/amd64` image on Apple Silicon. On the one Windows/NVIDIA machine used
+**Why `--platform linux/amd64`?** The image is `linux/amd64` only — that is the
+canonical architecture the book's outputs are gated against, so an emulated amd64 run
+on Apple Silicon reproduces the book's numbers exactly (a native arm64 build would
+not). Without the flag, an Apple Silicon Mac fails with *"no matching manifest for
+linux/arm64"*. Intel Macs, Linux, and Windows/WSL are amd64 already, so the flag is a
+harmless no-op there — keep it in the command and it works everywhere.
+
+**Platform tested.** Verified end-to-end on **macOS (Apple Silicon) with Docker
+Desktop** — anonymous `pull`, `run`, and a gated chapter reproduced byte-for-byte
+through amd64 emulation. The image is built and published by GitHub Actions (a Linux
+runner), so it's identical wherever you pull it. On the one Windows/NVIDIA machine used
 during this book's own development, Docker Desktop's WSL2 backend would not start at
 all, so Docker on Windows is an **untested path** for this book, not a confirmed one.
 If `docker run` fails on Windows, that's very likely a Docker Desktop/WSL2 setup issue
