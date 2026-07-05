@@ -17,7 +17,7 @@ dashboard, dbt, Airflow, Kubernetes manifests, a client-engagement project
 (`filmibox/`), and the verification harness that keeps it all honest.
 
 > **Code, datasets, and configuration only.** The book's text is sold
-> separately — get it at **[adsit.work/fde-handbook](https://adsit.work/fde-handbook)**.
+> separately — get it at **[fde-handbook.adsit.work](https://fde-handbook.adsit.work)**.
 
 <br clear="right"/>
 
@@ -105,7 +105,7 @@ GPU-dependent notebook has a free-Colab path. Newer NVIDIA cards
 
 ## Get the book
 
-**[adsit.work/fde-handbook](https://adsit.work/fde-handbook)** — EPUB + PDF
+**[fde-handbook.adsit.work](https://fde-handbook.adsit.work)** — EPUB + PDF
 bundle, DRM-free. 180 chapters · 13 modules · 7 reading paths · this
 portfolio as the running thread.
 
