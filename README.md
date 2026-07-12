@@ -1,5 +1,7 @@
 # The Forward Deployed Engineer's Handbook — Companion Code
 
+[![Preview DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21316096.svg)](https://doi.org/10.5281/zenodo.21316096)
+
 <img src="assets/cover.jpg" alt="The Forward Deployed Engineer's Handbook — book cover" width="280" align="right" />
 
 ![Chapters](https://img.shields.io/badge/chapters-180-3D7370) ![Notebooks](https://img.shields.io/badge/notebooks-13-3D7370) ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-E07A3B) ![License](https://img.shields.io/badge/license-source--available-555)
