@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this handbook or its companion code, please cite it as below."
+type: book
+title: "The Forward Deployed Engineer's Handbook: From Python to Production AI Systems"
+authors:
+  - family-names: Verma
+    given-names: Abhijeet
+    orcid: "https://orcid.org/0009-0006-0173-6062"
+isbn: "978-81-688506-0-6"
+publisher:
+  name: "Adsit Press"
+year: 2026
+url: "https://fde-handbook.adsit.work"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21316095"
+    description: "Zenodo concept DOI (free preview edition; resolves to the latest version)"

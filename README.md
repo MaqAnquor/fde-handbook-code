@@ -125,7 +125,8 @@ Python version, and the chapter number).
   title     = {The Forward Deployed Engineer's Handbook: From Python to Production AI Systems},
   publisher = {Adsit Press},
   year      = {2026},
-  isbn      = {978-81-688506-0-6}
+  isbn      = {978-81-688506-0-6},
+  note      = {ORCID: 0009-0006-0173-6062}
 }
 ```
 
