@@ -1,0 +1,271 @@
+{
+  "name": "CinemaStream Churn Retention",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "churn-event",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "n-webhook",
+      "name": "Churn Event Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -460,
+        20
+      ],
+      "webhookId": "9f2a1c30-0000-4a10-9f11-churnevent01"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Stand-in for the PostgreSQL node: returns the rows that\n// SELECT title, genre, watch_minutes, watch_started\n//   FROM watch_events WHERE user_id = $1\n// would return for this subscriber.\nconst trigger = $input.first().json.body;\nconst rows = [\n  { title: 'Monsoon Wedding',  genre: 'drama',    watch_minutes: 118, watch_started: '2026-07-26T20:10:00Z' },\n  { title: 'Andaz Apna Apna',  genre: 'comedy',   watch_minutes: 42,  watch_started: '2026-07-27T21:40:00Z' },\n  { title: 'Sholay',           genre: 'drama',    watch_minutes: 96,  watch_started: '2026-07-29T19:05:00Z' },\n  { title: 'Drishyam',         genre: 'thriller', watch_minutes: 61,  watch_started: '2026-07-31T22:15:00Z' },\n  { title: 'Zindagi Milegi',   genre: 'drama',    watch_minutes: 134, watch_started: '2026-08-01T18:30:00Z' },\n];\nreturn rows.map(r => ({ json: { user_id: trigger.user_id, plan: trigger.plan, ...r } }));\n"
+      },
+      "id": "n-fetch",
+      "name": "Fetch Watch History",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -220,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// compute_engagement_summary \u2014 runs once for all items\nconst rows = $input.all();\nconst trigger = $('Churn Event Webhook').first().json.body;\n\nconst watchMins = rows.map(r => r.json.watch_minutes);\nconst avgWatch = watchMins.reduce((a, b) => a + b, 0) / watchMins.length;\n\nconst genreCounts = {};\nrows.forEach(r => {\n  const g = r.json.genre || 'other';\n  genreCounts[g] = (genreCounts[g] || 0) + 1;\n});\nconst topGenre = Object.entries(genreCounts).sort(([,a],[,b]) => b - a)[0][0];\n\nconst lastWatch = Math.max(...rows.map(r => new Date(r.json.watch_started).getTime()));\nconst daysSince = Math.floor((Date.now() - lastWatch) / 86400000);\n\nreturn [{ json: {\n  user_id: trigger.user_id,\n  plan: trigger.plan,\n  churn_score: trigger.churn_score,\n  avg_watch_mins: Number(avgWatch.toFixed(1)),\n  top_genre: topGenre,\n  days_since_last_watch: daysSince,\n  sessions: rows.length,\n} }];\n"
+      },
+      "id": "n-summary",
+      "name": "Engagement Summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        20,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.churn_score }}",
+              "rightValue": 0.85,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "n-if",
+      "name": "Churn Score >= 0.85?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        260,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'gpt-4o-mini', messages: [ { role: 'system', content: 'You are a warm retention specialist for a streaming service. Two sentences, not salesy.' }, { role: 'user', content: `Plan ${$json.plan}. Avg watch ${$json.avg_watch_mins} mins. Favourite genre ${$json.top_genre}. ${$json.days_since_last_watch} days since last watch.` } ], max_tokens: 150 }) }}",
+        "options": {}
+      },
+      "id": "n-llm",
+      "name": "Draft Retention Email (OpenAI)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "channel",
+              "value": "#retention-alerts",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "text",
+              "value": "=:rotating_light: {{ $('Engagement Summary').first().json.user_id }} ({{ $('Engagement Summary').first().json.plan }}) churn {{ $('Engagement Summary').first().json.churn_score }} \u2014 {{ $('Engagement Summary').first().json.top_genre }} fan, {{ $('Engagement Summary').first().json.days_since_last_watch }}d idle",
+              "type": "string"
+            },
+            {
+              "id": "a3",
+              "name": "draft_email",
+              "value": "={{ $json.choices[0].message.content }}",
+              "type": "string"
+            },
+            {
+              "id": "a4",
+              "name": "action",
+              "value": "slack_alert",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "n-slack",
+      "name": "Slack Alert Payload",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        760,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b1",
+              "name": "user_id",
+              "value": "={{ $json.user_id }}",
+              "type": "string"
+            },
+            {
+              "id": "b2",
+              "name": "queue",
+              "value": "weekly_winback",
+              "type": "string"
+            },
+            {
+              "id": "b3",
+              "name": "action",
+              "value": "email_batch",
+              "type": "string"
+            },
+            {
+              "id": "b4",
+              "name": "processed_at",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "n-email",
+      "name": "Email Batch Row",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        520,
+        160
+      ]
+    }
+  ],
+  "connections": {
+    "Churn Event Webhook": {
+      "main": [
+        [
+          {
+            "node": "Fetch Watch History",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Watch History": {
+      "main": [
+        [
+          {
+            "node": "Engagement Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Engagement Summary": {
+      "main": [
+        [
+          {
+            "node": "Churn Score >= 0.85?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Churn Score >= 0.85?": {
+      "main": [
+        [
+          {
+            "node": "Draft Retention Email (OpenAI)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Email Batch Row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft Retention Email (OpenAI)": {
+      "main": [
+        [
+          {
+            "node": "Slack Alert Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {
+    "Draft Retention Email (OpenAI)": [
+      {
+        "json": {
+          "id": "chatcmpl-pinned-sample",
+          "model": "gpt-4o-mini",
+          "choices": [
+            {
+              "index": 0,
+              "finish_reason": "stop",
+              "message": {
+                "role": "assistant",
+                "content": "Noticed you've been on a drama run lately - Sholay and Monsoon Wedding back to back is excellent taste. We've just added three restored classics we think you'll love, waiting for you whenever you're back."
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

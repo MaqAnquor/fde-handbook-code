@@ -71,3 +71,12 @@ ml/**/artifacts/
 *.pkl
 *.joblib
 *.onnx
+
+# ---- Generated data-quality / EDA reports ----
+# HTML reports and JSON summaries produced by scripts/generate_profile_report.py,
+# generate_sweetviz_report.py, run_gx_checkpoint.py, generate_drift_report.py —
+# regenerate by running the script, don't commit.
+reports/*.html
+reports/*.json
+reports/gx/
+!reports/.gitkeep

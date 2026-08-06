@@ -133,7 +133,7 @@ def load_data():
 # ---------------------------------------------------------------------------
 # Page config + header
 # ---------------------------------------------------------------------------
-st.set_page_config(page_title="CinemaStream Analytics", page_icon="dY", layout="wide")
+st.set_page_config(page_title="CinemaStream Analytics", page_icon=":bar_chart:", layout="wide")
 
 st.title("CinemaStream Analytics Dashboard")
 st.caption("Internal tool -- prototype built with Wei Lin, Module 8 (Streamlit + Prompt Engineering)")
@@ -224,10 +224,12 @@ st.subheader("Recent watch events (filtered)")
 
 show_completed_only = st.checkbox("Completed sessions only", value=False)
 
+# filtered_events already carries `country`; only pull name + plan from users_df
+# (merging a second `country` would create country_x/country_y and drop plain `country`)
 table = filtered_events.merge(
     movies_df[["movie_id", "title", "genre"]], on="movie_id"
 ).merge(
-    users_df[["user_id", "name", "country", "plan"]], on="user_id"
+    users_df[["user_id", "name", "plan"]], on="user_id"
 )
 
 if show_completed_only:
