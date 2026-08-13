@@ -111,3 +111,10 @@ skl2onnx==1.20.0        # Ch 076: sklearn → ONNX export
 loguru==0.7.3           # Ch 013a: production logging chapter
 greenlet==3.5.2         # Ch 125: llama_index async dependency
 sdv==1.37.1             # Ch 024a: Synthetic Data Vault
+
+# --- Agent frameworks --------------------------------------------------------
+# Ch 130: AutoGen. Pin BOTH, and pin them together — 0.2 → 0.4 was a breaking
+# rewrite and the chapter is written against 0.7.x only. Note `pyautogen` on PyPI
+# is now the AG2 community fork, NOT this package; do not substitute it.
+autogen-agentchat==0.7.5
+autogen-ext[openai]==0.7.5
