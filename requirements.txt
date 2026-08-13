@@ -7,11 +7,12 @@
 # pinned compiled wheels (torch, faiss, duckdb, catboost, …) lag new Python
 # releases and would fall back to failing source builds. See SETUP.md Step 4.
 # Pinning makes runs reproducible on Windows, macOS, Linux, and Google Colab,
-# and prevents breakage when a library ships a breaking major release
-# (e.g. transformers 5.x removed the "summarization" pipeline task alias).
+# and prevents breakage when a library ships a breaking major release.
 #
-# NOTE on transformers: pinned <5 on purpose. The book teaches the canonical
-# pipeline("summarization") / pipeline("translation") API, which lives in 4.x.
+# NOTE on transformers: now on 5.x. The seq2seq pipeline task aliases
+# ("summarization", "translation", "text2text-generation") were removed in 5.0,
+# so the book teaches the explicit AutoTokenizer + AutoModelForSeq2SeqLM +
+# .generate() API instead (Ch 123 §2) — stable across 4.x and 5.x.
 #
 # NOTE on platform-specific packages:
 #   - vllm (Ch 128) requires Linux + CUDA; it is intentionally NOT listed here.
@@ -46,10 +47,10 @@ fastapi==0.137.2
 uvicorn==0.49.0
 pydantic==2.13.4
 streamlit==1.58.0
-gradio==4.44.1          # pinned <5 — gradio 5+ requires hf-hub>=1.0, conflicting with transformers<5 (needs hf-hub<1.0).
-                        # Python 3.13 caveat: gradio 4.x imports pyaudioop (removed from 3.13 stdlib).
-                        # Ch 110 code blocks are marked # skip in QC; readers on 3.13 can run
-                        # `pip install 'gradio>=5' 'transformers>=5'` to use both at head versions.
+gradio==6.22.0          # was held at 4.44.1 while transformers was <5 (gradio 5+ needs
+                        # huggingface-hub>=1.0, transformers 4.x needs <1.0). transformers 5.x
+                        # takes hf-hub 1.x, so that conflict is gone and gradio moves to 6.x.
+                        # Ch 110 is written and verified against this version.
 requests==2.34.2
 responses==0.26.1           # HTTP mocking for tests (Ch 019a)
 httpx==0.28.1
@@ -74,9 +75,13 @@ sentence-transformers==5.6.0
 # --- Deep learning / NLP -----------------------------------------------------
 torch==2.12.1
 torchvision==0.27.1    # must match torch==2.12.1 exactly
-transformers==4.57.6   # pinned <5 — see note above
-tokenizers==0.22.2     # transformers 4.57.6 requires <=0.23.0; 0.23.0 was never released, 0.23.1 breaks it
-huggingface-hub==0.36.2  # transformers 4.57.6 requires <1.0; legacy resolver pulls 1.x without this pin
+transformers==5.15.0   # 5.x removed the seq2seq pipeline tasks ("summarization", "translation",
+                       # "text2text-generation"); the book uses the explicit
+                       # AutoTokenizer + AutoModelForSeq2SeqLM + .generate() API, which is
+                       # unaffected. Moving off 4.x also unpins gradio (see above) and clears
+                       # 5 advisories on transformers + 28 on gradio.
+tokenizers==0.22.2     # transformers 5.15.0 requires >=0.22.0,<=0.23.0; 0.23.0 was never released, 0.23.1 breaks it
+huggingface-hub==1.27.0  # transformers 5.15.0 requires >=1.5.0,<2.0; gradio 6.x also needs 1.x
 datasets==5.0.0
 peft==0.19.1
 
@@ -111,6 +116,17 @@ skl2onnx==1.20.0        # Ch 076: sklearn → ONNX export
 loguru==0.7.3           # Ch 013a: production logging chapter
 greenlet==3.5.2         # Ch 125: llama_index async dependency
 sdv==1.37.1             # Ch 024a: Synthetic Data Vault
+
+# --- Security floors ---------------------------------------------------------
+# Transitive packages that resolve to a version with known advisories. Pinning a
+# FLOOR (not an exact version) fixes the advisory without freezing the dependency.
+# Re-check with: pip-audit    (Ch 085k §2.9 teaches this gate)
+cryptography>=49.0.0    # PYSEC-2026-3552/3553/3554 — resolves to 50.x, verified clean
+# Known-unfixable, accepted risk (no patched release exists as of 2026-08):
+#   chromadb==1.1.1  PYSEC-2026-311      ragas==0.4.3  PYSEC-2026-3046
+# Previously constrained by the pin web, now clear: migrating Ch 123 off the removed
+# pipeline("summarization") task freed transformers to 5.15.0, which in turn freed
+# gradio to 6.22.0 — closing 33 advisories (28 gradio + 5 transformers).
 
 # --- Agent frameworks --------------------------------------------------------
 # Ch 130: AutoGen. Pin BOTH, and pin them together — 0.2 → 0.4 was a breaking

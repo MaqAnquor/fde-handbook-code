@@ -121,13 +121,14 @@ Every version in `requirements.txt` is pinned to an exact number. That is delibe
 
 The modern pip resolver (`pip>=20.3`) treats the dependency graph below as unsolvable and aborts with `resolution-too-deep`. The `--use-deprecated=legacy-resolver` flag tells pip to install the explicit pins we provide instead of trying to re-derive the whole graph. The pins are already correct; the flag just stops pip from second-guessing them.
 
-### The four pins that matter
+### The five pins that matter
 
 | Pin | The conflict it resolves |
 |---|---|
-| `gradio==4.44.1` | Gradio 5/6 requires `huggingface-hub>=1.0`, but `transformers<5` requires `huggingface-hub<1.0`. They **cannot coexist**. The book teaches the `transformers` 4.x pipeline API, so Gradio is held at the last 4.x release. |
-| `huggingface-hub==0.36.2` | The last `0.x` release. Without this explicit pin, even the legacy resolver pulls `1.x`, which breaks `transformers 4.57.6` (needs `<1.0`). |
-| `tokenizers==0.22.2` | `transformers 4.57.6` requires `tokenizers<=0.23.0`. Version `0.23.0` was **never released** (the project jumped `0.22.2 → 0.23.1`), and `0.23.1` breaks the constraint. `0.22.2` is the last compatible build. |
+| `transformers==5.15.0` | The 5.0 release removed the seq2seq pipeline tasks (`summarization`, `translation`, `text2text-generation`). The book uses the explicit `AutoTokenizer` + `AutoModelForSeq2SeqLM` + `.generate()` API (Ch 123 §2), which is unaffected — so it can stay on 5.x and take the security fixes. |
+| `gradio==6.22.0` | Gradio 5/6 requires `huggingface-hub>=1.0`, which `transformers` 4.x forbade. With `transformers` on 5.x that conflict is gone, so Gradio runs current. Ch 110 is executed against this version. |
+| `huggingface-hub==1.27.0` | `transformers 5.15.0` requires `>=1.5.0,<2.0`; Gradio 6 also needs `1.x`. Pinned so the legacy resolver cannot drift it. |
+| `tokenizers==0.22.2` | `transformers 5.15.0` requires `tokenizers>=0.22.0,<=0.23.0`. Version `0.23.0` was **never released** (the project jumped `0.22.2 → 0.23.1`), and `0.23.1` breaks the constraint. `0.22.2` is the last compatible build. |
 | `torchvision==0.27.1` | Must match `torch==2.12.1` **exactly** — a mismatched pair fails to load shared CUDA/MPS symbols at import time. |
 
 ### One package is deliberately *not* installed

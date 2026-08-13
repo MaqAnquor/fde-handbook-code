@@ -35,7 +35,9 @@ ml = [
 ]
 dl = [
     "torch>=2.2.0",
-    "transformers>=4.38.0,<5",  # 5.x removed the pipeline("summarization") task the book teaches
+    # Ch 123 uses the explicit AutoTokenizer + AutoModelForSeq2SeqLM + .generate() API,
+    # which is stable across 4.x and 5.x — so there is no upper bound to hold here.
+    "transformers>=4.38.0",
     "sentence-transformers>=2.6.0",
 ]
 dev = [
