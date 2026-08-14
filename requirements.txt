@@ -130,6 +130,12 @@ sdv==1.37.1             # Ch 024a: Synthetic Data Vault
 # FLOOR (not an exact version) fixes the advisory without freezing the dependency.
 # Re-check with: pip-audit    (Ch 085k §2.9 teaches this gate)
 cryptography>=49.0.0    # PYSEC-2026-3552/3553/3554 — resolves to 50.x, verified clean
+pillow>=12.3.0          # requirements.lock had frozen 10.4.0 (24 advisories). Nothing here held
+                        # it back — pillow is purely transitive (matplotlib, gradio, streamlit,
+                        # torchvision, ragas, llama-index-core) and the tightest declared cap is
+                        # gradio/streamlit's pillow<13. The lock had simply gone stale, which the
+                        # requirements.txt path hid: unpinned, it already resolved to a patched
+                        # 12.x, so only readers taking the --require-hashes lock path were exposed.
 # Known-unfixable, accepted risk (no patched release exists as of 2026-08):
 #   chromadb==1.1.1  PYSEC-2026-311      ragas==0.4.3  PYSEC-2026-3046
 # Previously constrained by the pin web, now clear: migrating Ch 123 off the removed
