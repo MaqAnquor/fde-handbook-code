@@ -73,8 +73,8 @@ qdrant-client==1.18.0
 sentence-transformers==5.6.0
 
 # --- Deep learning / NLP -----------------------------------------------------
-torch==2.12.1
-torchvision==0.27.1    # must match torch==2.12.1 exactly
+torch==2.13.0          # 2.12.1 and earlier: PYSEC-2025-194
+torchvision==0.28.0    # must match torch==2.13.0 exactly
 transformers==5.15.0   # 5.x removed the seq2seq pipeline tasks ("summarization", "translation",
                        # "text2text-generation"); the book uses the explicit
                        # AutoTokenizer + AutoModelForSeq2SeqLM + .generate() API, which is
@@ -99,7 +99,15 @@ llama-index-llms-ollama==0.10.1
 ragas==0.4.3
 ollama==0.6.2
 crewai==1.6.1
-pandasai==0.1.0
+# pandasai: deliberately ABSENT — do not add it back.
+#   1. pandasai 3.0.0 declares Requires-Python >=3.8,<3.12; this env is 3.11-3.13 (tested 3.13).
+#   2. Its pins are irreconcilable with the book's stack: numpy<2.0 (we pin 2.3.5),
+#      matplotlib<3.8 (3.10.0), seaborn<0.13.0 (0.13.2), pyarrow<19.0.0 (24.0.0), scipy==1.10.1.
+#      pyarrow<19 in particular is a downgrade into a known-vulnerable version.
+#   3. The only version that WOULD install here, pandasai==0.1.0, carries 4 advisories
+#      (PYSEC-2026-446/-447/-448/-1757), and 2.3.2 hard-pins pandas==1.5.3.
+#   Chapter 131 therefore runs pandasai in its own Python 3.11 venv (see chapters/131_pandasai.md),
+#   following the same convention as Chapter 077c.
 
 # --- QC / notebook tooling (to run tools/qc_notebooks.py + build_notebooks.py) -
 nbformat==5.10.4

@@ -105,7 +105,7 @@ print("real op   :", (a @ a).sum().item())               # if THIS runs, the GPU
 | Pascal & older | GTX 10xx and down | ≤ 61 | Too old for recent torch → use **Colab** |
 | No NVIDIA GPU | Mac, most laptops | — | Colab (free T4) or CPU — see `COLAB_SETUP.md` |
 
-> **Note on the pinned `torch==2.12.1`.** That pin gives you correct, reproducible **CPU** output on
+> **Note on the pinned `torch==2.13.0`.** That pin gives you correct, reproducible **CPU** output on
 > every platform. If you want to *use* an NVIDIA GPU, install the `cu128` build over the top as shown
 > above — it may resolve to a slightly different torch version (e.g. 2.11.x), and that is fine: the
 > deep-learning / RAG / LLM outputs are **representative, not byte-reproducible** (your numbers will
@@ -129,7 +129,7 @@ The modern pip resolver (`pip>=20.3`) treats the dependency graph below as unsol
 | `gradio==6.22.0` | Gradio 5/6 requires `huggingface-hub>=1.0`, which `transformers` 4.x forbade. With `transformers` on 5.x that conflict is gone, so Gradio runs current. Ch 110 is executed against this version. |
 | `huggingface-hub==1.27.0` | `transformers 5.15.0` requires `>=1.5.0,<2.0`; Gradio 6 also needs `1.x`. Pinned so the legacy resolver cannot drift it. |
 | `tokenizers==0.22.2` | `transformers 5.15.0` requires `tokenizers>=0.22.0,<=0.23.0`. Version `0.23.0` was **never released** (the project jumped `0.22.2 → 0.23.1`), and `0.23.1` breaks the constraint. `0.22.2` is the last compatible build. |
-| `torchvision==0.27.1` | Must match `torch==2.12.1` **exactly** — a mismatched pair fails to load shared CUDA/MPS symbols at import time. |
+| `torchvision==0.28.0` | Must match `torch==2.13.0` **exactly** — a mismatched pair fails to load shared CUDA/MPS symbols at import time. (`torch` moved off 2.12.1 to clear PYSEC-2025-194.) |
 
 ### One package is deliberately *not* installed
 
