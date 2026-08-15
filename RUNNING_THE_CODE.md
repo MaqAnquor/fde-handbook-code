@@ -203,10 +203,15 @@ already baked in. Your **code and data come from this repo** (mounted); the
 git clone https://github.com/MaqAnquor/fde-handbook-code.git && cd fde-handbook-code
 
 # 2. pull the image (the --platform flag is required on Apple Silicon Macs)
-docker pull --platform linux/amd64 ghcr.io/maqanquor/fde-handbook:latest
+# Pin the image by DIGEST, not by tag. `:latest` is mutable — the same command can pull
+# a different image next month, which defeats the whole point of a pinned environment.
+# A digest is immutable: it names exactly one image, forever.
+docker pull --platform linux/amd64 ghcr.io/maqanquor/fde-handbook@sha256:e0617732fee32f71182abfc938f9917266c80f05ee2055af80982663072dfb46
 
 # 3. launch JupyterLab on the repo, then open http://localhost:8888
-docker run --rm --platform linux/amd64 -p 8888:8888 -v "$PWD":/work ghcr.io/maqanquor/fde-handbook:latest
+docker run --rm --platform linux/amd64 -p 8888:8888 -v "$PWD":/work ghcr.io/maqanquor/fde-handbook@sha256:e0617732fee32f71182abfc938f9917266c80f05ee2055af80982663072dfb46
+# (If the project publishes a newer image, fetch its current digest with:
+#   docker buildx imagetools inspect ghcr.io/maqanquor/fde-handbook:latest )
 ```
 
 Open any notebook under `notebooks/` and run it — `PYTHONHASHSEED=0` and
