@@ -107,9 +107,12 @@ GPU-dependent notebook has a free-Colab path. Newer NVIDIA cards
 
 ## Get the book
 
-**[fde-handbook.adsit.work](https://fde-handbook.adsit.work)** — EPUB + PDF
-bundle, DRM-free. 180 chapters · 13 modules · 7 reading paths · this
-portfolio as the running thread.
+**[Kindle edition on Amazon](https://www.amazon.com/dp/B0HFHV4CMG)** — $29.99,
+DRM-free. 180 chapters · 13 modules · 7 reading paths · this portfolio as the
+running thread.
+
+**[fde-handbook.adsit.work](https://fde-handbook.adsit.work)** — a free
+two-chapter preview, and the EPUB + PDF bundle direct (coming shortly).
 
 ## Questions & feedback
 
