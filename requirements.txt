@@ -128,6 +128,8 @@ nest-asyncio==1.6.0     # qc_notebooks.py: lets asyncio.run() work inside the no
 pytest==9.1.1           # Ch 018a: testing chapter — must be installed to run test blocks in QC
 mongomock==4.3.0        # Ch 041a: MongoDB mock for NoSQL chapter QC
 fakeredis==2.36.2       # Ch 041a: Redis mock for NoSQL chapter QC
+redis==8.0.0            # fakeredis 2.36.2 breaks on redis 8.2 (AttributeError: '__closure__');
+                        # unpinned, redis resolves to 8.2.x and every FakeRedis() in Ch 041a crashes
 skl2onnx==1.20.0        # Ch 076: sklearn → ONNX export
 loguru==0.7.3           # Ch 013a: production logging chapter
 greenlet==3.5.2         # Ch 125: llama_index async dependency
