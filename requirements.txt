@@ -59,6 +59,10 @@ httpx==0.28.1
 great-expectations==0.18.0
 evidently==0.7.21
 ydata-profiling==4.18.4
+# ydata-profiling 4.18.4 still does `import pkg_resources`, which setuptools
+# removed in 82.0. Keep setuptools on 81.x (matches requirements.lock) until a
+# ydata-profiling release drops pkg_resources.
+setuptools==81.0.0
 sweetviz==2.3.3
 
 # --- Analytical engines ------------------------------------------------------
