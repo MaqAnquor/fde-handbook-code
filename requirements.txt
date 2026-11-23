@@ -63,6 +63,10 @@ ydata-profiling==4.18.4
 # removed in 82.0. Keep setuptools on 81.x (matches requirements.lock) until a
 # ydata-profiling release drops pkg_resources.
 setuptools==81.0.0
+# ydata-profiling 4.18.4 needs scipy<1.17 (it imports scipy.fft._pocketfft, gone
+# in 1.17). The legacy resolver takes scipy from scikit-learn first (>=1.10 →
+# 1.18.x) and never backtracks, so pin it explicitly (matches requirements.lock).
+scipy==1.16.3
 sweetviz==2.3.3
 
 # --- Analytical engines ------------------------------------------------------
