@@ -374,7 +374,7 @@ with DAG(
     dag_id             = "watch_events_ingestion",
     description        = "Daily ingestion of CinemaStream watch events to the analytics warehouse",
     default_args       = DEFAULT_ARGS,
-    schedule_interval  = "0 2 * * *",        # 02:00 UTC daily
+    schedule           = "0 2 * * *",        # 02:00 UTC daily (Airflow 2.4+/3.x; schedule_interval was removed in 3.0)
     start_date         = datetime(2024, 1, 1),
     catchup            = False,               # don't backfill on first deploy
     max_active_runs    = 1,                   # no overlapping runs
