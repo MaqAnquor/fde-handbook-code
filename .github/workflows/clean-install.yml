@@ -42,7 +42,7 @@ jobs:
       run:
         shell: bash   # Git Bash on Windows, so one script serves all three
     env:
-      # README: `source "$ACTIVATE"` (Windows: .venv\Scripts\activate)
+      # README: `source .venv/bin/activate` (Windows: .venv\Scripts\activate)
       ACTIVATE: ${{ matrix.os == 'windows-latest' && '.venv/Scripts/activate' || '.venv/bin/activate' }}
       PYTHONUTF8: "1"   # Windows console is cp1252; scripts print non-ASCII
     steps:
