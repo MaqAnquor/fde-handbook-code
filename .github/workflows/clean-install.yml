@@ -35,9 +35,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+    timeout-minutes: 90
+    defaults:
+      run:
+        shell: bash   # Git Bash on Windows, so one script serves all three
+    env:
+      # README: `source "$ACTIVATE"` (Windows: .venv\Scripts\activate)
+      ACTIVATE: ${{ matrix.os == 'windows-latest' && '.venv/Scripts/activate' || '.venv/bin/activate' }}
+      PYTHONUTF8: "1"   # Windows console is cp1252; scripts print non-ASCII
     steps:
       - uses: actions/checkout@v4
 
@@ -55,25 +62,25 @@ jobs:
 
       - name: README install
         run: |
-          python3 -m venv .venv
-          source .venv/bin/activate
+          python -m venv .venv
+          source "$ACTIVATE"
           pip install --no-cache-dir -r requirements.txt --use-deprecated=legacy-resolver
           pip list | grep -iE '^(setuptools|scipy|ydata-profiling|numpy|pandas|torch) '
 
       - name: Profile report script
         run: |
-          source .venv/bin/activate
+          source "$ACTIVATE"
           python cinemastream/scripts/generate_profile_report.py
           test -s cinemastream/reports/cinemastream_profile.html
 
       - name: Portfolio tests
         run: |
-          source .venv/bin/activate
+          source "$ACTIVATE"
           python -m pytest cinemastream/tests -q
 
       - name: pip check (informational)
         if: always()
         continue-on-error: true
         run: |
-          source .venv/bin/activate
+          source "$ACTIVATE"
           pip check
