@@ -1,0 +1,79 @@
+name: clean-install
+
+# Reader-path guard: does the README Quickstart actually work on a fresh machine?
+#
+# Follows the README install verbatim (fresh venv, requirements.txt, legacy
+# resolver) on Linux and macOS, then runs the profile script and the portfolio
+# tests. The author's own gates run against the long-lived venv captured in
+# requirements.lock, which can hide breakage that only a clean install hits —
+# e.g. setuptools 82 dropping pkg_resources, or the legacy resolver taking
+# scipy 1.18 from scikit-learn when ydata-profiling needs <1.17.
+#
+# The weekly schedule matters: requirements.txt pins top-level packages only,
+# so a new upstream release of a transitive dependency can break a fresh
+# install with no commit here.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "requirements.txt"
+      - "cinemastream/**"
+      - ".github/workflows/clean-install.yml"
+  pull_request:
+    paths:
+      - "requirements.txt"
+      - "cinemastream/**"
+      - ".github/workflows/clean-install.yml"
+  schedule:
+    - cron: "0 6 * * 1"   # Mondays 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  readme-install:
+    name: README install (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # The full stack (torch + CUDA wheels) is ~8 GB installed; the stock
+      # Ubuntu runner does not have that much free space.
+      - name: Free disk space (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          df -h /
+
+      - name: README install
+        run: |
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip install --no-cache-dir -r requirements.txt --use-deprecated=legacy-resolver
+          pip list | grep -iE '^(setuptools|scipy|ydata-profiling|numpy|pandas|torch) '
+
+      - name: Profile report script
+        run: |
+          source .venv/bin/activate
+          python cinemastream/scripts/generate_profile_report.py
+          test -s cinemastream/reports/cinemastream_profile.html
+
+      - name: Portfolio tests
+        run: |
+          source .venv/bin/activate
+          python -m pytest cinemastream/tests -q
+
+      - name: pip check (informational)
+        if: always()
+        continue-on-error: true
+        run: |
+          source .venv/bin/activate
+          pip check
